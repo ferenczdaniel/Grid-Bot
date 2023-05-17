@@ -1,7 +1,6 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
-import fetch from "node-fetch";
 import { BingChat } from "bing-chat";
 
 const app = express();
@@ -12,6 +11,8 @@ app.use(bodyParser.json());
 
 const api = new BingChat({ cookie: BING_COOKIE });
 console.log("asd");
+
+let result;
 
 app.post("/", async (req, res) => {
     console.log(typeof req.body);
@@ -24,8 +25,10 @@ app.post("/", async (req, res) => {
     results.text = "";
 
     while (results.text === "") {
-        results = await api.sendMessage(prompt);
+        results = await api.sendMessage(prompt, result);
     }
+
+    result = results;
 
     console.log(JSON.stringify(results));
 
