@@ -75,7 +75,8 @@ function App() {
             body: JSON.stringify({
                 message:
                     apiRequestBody.messages[apiRequestBody.messages.length - 1]
-                        .content,
+                        .content +
+                    ". If this question is Archicad specific, please give me the answer from https://helpcenter.graphisoft.com/ or https://community.graphisoft.com/, otherwise anywhere",
             }),
         })
             .then((data) => {
