@@ -83,25 +83,41 @@ function App() {
             })
             .then((body) => {
                 console.log(body);
-                setMessages([
-                    ...chatMessages,
-                    {
-                        message:
-                            body.text.replace(/\[\^[0-9]*\^\]/g, "") ||
-                            "I'm sorry! Can you repeat your question?",
-                        sender: "BingAI",
-                    },
-                    body.detail.sourceAttributions.length === 0
-                        ? null
-                        : {
-                              message:
-                                  "See more: " +
-                                  body.detail.sourceAttributions
-                                      .map((obj) => obj.seeMoreUrl)
-                                      .join(", "),
-                              sender: "BingAI",
-                          },
-                ]);
+
+                if (body.detail.sourceAttributions.length === 0) {
+                    setMessages([
+                        ...chatMessages,
+                        {
+                            message:
+                                body.text.replace(/\[\^[0-9]*\^\]/g, "") ||
+                                "I'm sorry! Can you repeat your question?",
+                            sender: "BingAI",
+                        },
+                    ]);
+                } else {
+                    setMessages([
+                        ...chatMessages,
+                        {
+                            message:
+                                body.text.replace(/\[\^[0-9]*\^\]/g, "") ||
+                                "I'm sorry! Can you repeat your question?",
+                            sender: "BingAI",
+                        },
+                        {
+                            content:
+                                "See more: " +
+                                body.detail.sourceAttributions
+                                    .map(
+                                        (obj) =>
+                                            `<a href=${obj.seeMoreUrl}>${obj.seeMoreUrl}</a>`
+                                    )
+                                    .join(", "),
+                            sender: "BingAI",
+                            type: "html",
+                        },
+                    ]);
+                }
+
                 setIsTyping(false);
             });
     }
@@ -127,7 +143,17 @@ function App() {
                         >
                             {messages.map((message, i) => {
                                 console.log(message);
-                                return <Message key={i} model={message} />;
+                                if (message.type === "html") {
+                                    return (
+                                        <Message key={i} model={message}>
+                                            <Message.HtmlContent
+                                                html={message.content}
+                                            />
+                                        </Message>
+                                    );
+                                } else {
+                                    return <Message key={i} model={message} />;
+                                }
                             })}
                         </MessageList>
                         <MessageInput
