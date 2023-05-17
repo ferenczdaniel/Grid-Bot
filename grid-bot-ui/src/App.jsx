@@ -87,7 +87,7 @@ function App() {
                     ...chatMessages,
                     {
                         message:
-                            body.text ||
+                            body.text.replace(/\[\^[0-9]*\^\]/g, "") ||
                             "I'm sorry! Can you repeat your question?",
                         sender: "BingAI",
                     },
