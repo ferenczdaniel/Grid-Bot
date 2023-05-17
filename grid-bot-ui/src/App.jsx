@@ -101,8 +101,8 @@ function App() {
             <div
                 style={{
                     position: "relative",
-                    height: "800px",
-                    width: "700px",
+                    height: "100vh",
+                    width: "100%",
                 }}
             >
                 <MainContainer>
