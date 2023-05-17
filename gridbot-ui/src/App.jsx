@@ -9,7 +9,6 @@ import {
     MessageInput,
     TypingIndicator,
 } from "@chatscope/chat-ui-kit-react";
-
 // "Explain things like you would to a 10 year old learning how to code."
 const systemMessage = {
     //  Explain things like you're talking to a software professional with 5 years of experience.
@@ -20,9 +19,9 @@ const systemMessage = {
 function App() {
     const [messages, setMessages] = useState([
         {
-            message: "Hello, I'm ChatGPT! Ask me anything!",
+            message: "Hello, I'm BingAI! Ask me anything!",
             sentTime: "just now",
-            sender: "ChatGPT",
+            sender: "BingAI",
         },
     ]);
     const [isTyping, setIsTyping] = useState(false);
@@ -41,10 +40,10 @@ function App() {
         // Initial system message to determine ChatGPT functionality
         // How it responds, how it talks, etc.
         setIsTyping(true);
-        await processMessageToChatGPT(newMessages);
+        await processMessageToBingAI(newMessages);
     };
 
-    async function processMessageToChatGPT(chatMessages) {
+    async function processMessageToBingAI(chatMessages) {
         // messages is an array of messages
         // Format messages for chatGPT API
         // API is expecting objects in format of { role: "user" or "assistant", "content": "message here"}
@@ -52,7 +51,7 @@ function App() {
 
         let apiMessages = chatMessages.map((messageObject) => {
             let role = "";
-            if (messageObject.sender === "ChatGPT") {
+            if (messageObject.sender === "BingAI") {
                 role = "assistant";
             } else {
                 role = "user";
@@ -64,32 +63,44 @@ function App() {
         // and the messages which we formatted above. We add a system message in the front to'
         // determine how we want chatGPT to act.
         const apiRequestBody = {
-            model: "gpt-3.5-turbo",
             messages: [
                 systemMessage, // The system message DEFINES the logic of our chatGPT
                 ...apiMessages, // The messages from our chat with ChatGPT
             ],
         };
 
-        await fetch("https://api.openai.com/v1/chat/completions", {
+        fetch("http://localhost:8081/", {
             method: "POST",
-            headers: {
-                Authorization: "Bearer " + API_KEY,
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(apiRequestBody),
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                message:
+                    apiRequestBody.messages[apiRequestBody.messages.length - 1]
+                        .content,
+            }),
         })
             .then((data) => {
                 return data.json();
             })
-            .then((data) => {
-                console.log(data);
+            .then((body) => {
+                console.log(body);
                 setMessages([
                     ...chatMessages,
                     {
-                        message: data.choices[0].message.content,
-                        sender: "ChatGPT",
+                        message:
+                            body.text.replace(/\[\^[0-9]*\^\]/g, "") ||
+                            "I'm sorry! Can you repeat your question?",
+                        sender: "BingAI",
                     },
+                    body.detail.sourceAttributions.length === 0
+                        ? null
+                        : {
+                              message:
+                                  "See more: " +
+                                  body.detail.sourceAttributions
+                                      .map((obj) => obj.seeMoreUrl)
+                                      .join(", "),
+                              sender: "BingAI",
+                          },
                 ]);
                 setIsTyping(false);
             });
@@ -100,8 +111,8 @@ function App() {
             <div
                 style={{
                     position: "relative",
-                    height: "800px",
-                    width: "700px",
+                    height: "100vh",
+                    width: "100%",
                 }}
             >
                 <MainContainer>
@@ -110,7 +121,7 @@ function App() {
                             scrollBehavior="smooth"
                             typingIndicator={
                                 isTyping ? (
-                                    <TypingIndicator content="ChatGPT is typing" />
+                                    <TypingIndicator content="BingAI is typing" />
                                 ) : null
                             }
                         >
