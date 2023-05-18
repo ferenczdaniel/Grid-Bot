@@ -48,6 +48,10 @@ function App() {
         setMessages(newMessages);
     };
 
+    const fetchMessage = (message) => {
+        console.log(message);
+    };
+
     async function processMessageToGridBot(chatMessages) {
         fetch("http://localhost:8081/", {
             method: "POST",
@@ -69,7 +73,13 @@ function App() {
                         ...chatMessages,
                         {
                             content:
-                                body.text.replace(/\[\^[0-9]*\^\]/g, "") ||
+                                `<div style="display:flex;">${body.text.replace(
+                                    /\[\^[0-9]*\^\]/g,
+                                    ""
+                                )}</div><br><button id="${
+                                    chatMessages[chatMessages.length - 1]
+                                        .content
+                                }">Post on Community </button>` ||
                                 "I'm sorry! Can you repeat your question?",
                             sender: "GridBot",
                             expand: true,
