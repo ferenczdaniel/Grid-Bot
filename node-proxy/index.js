@@ -4,7 +4,7 @@ import bodyParser from "body-parser";
 import { BingChat } from "bing-chat";
 
 const app = express();
-const BING_COOKIE = "PUdsxl/890armzHq/Lgash|1684219714980|1684219714980";
+const BING_COOKIE = "PUdsxl/891GrmzHq/Lgbsh|1684217824980|1684310714980";
 
 app.use(cors());
 app.use(bodyParser.json());

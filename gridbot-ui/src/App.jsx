@@ -48,10 +48,6 @@ function App() {
         setMessages(newMessages);
     };
 
-    const fetchMessage = (message) => {
-        console.log(message);
-    };
-
     async function processMessageToGridBot(chatMessages) {
         fetch("http://localhost:8081/", {
             method: "POST",
@@ -76,10 +72,19 @@ function App() {
                                 `<div style="display:flex;">${body.text.replace(
                                     /\[\^[0-9]*\^\]/g,
                                     ""
-                                )}</div><br><button id="${
-                                    chatMessages[chatMessages.length - 1]
-                                        .content
-                                }">Post on Community </button>` ||
+                                )}</div><br><div style="display:flex; align-items:center; justify-content:space-between"><img
+                    src="icons/Frame_54.svg"
+                    alt="icon"
+                    style="width: 22px; height: 22px; cursor: pointer"
+                /><img
+                    src="icons/Frame_55.svg"
+                    alt="icon"
+                    style="width: 22px; height: 22px; cursor: pointer"
+                /><button style="display:flex; align-items:center; padding: 5px" onClick="parent.open('https://community.graphisoft.com/t5/International/ct-p/EN')" "><img
+                    src="icons/Frame_52.svg"
+                    alt="icon"
+                    style="width: 20px; height: 20px"
+                /> Community</button><div>` ||
                                 "I'm sorry! Can you repeat your question?",
                             sender: "GridBot",
                             expand: true,
@@ -91,7 +96,22 @@ function App() {
                         ...chatMessages,
                         {
                             content:
-                                body.text.replace(/\[\^[0-9]*\^\]/g, "") ||
+                                `<div style="display:flex;">${body.text.replace(
+                                    /\[\^[0-9]*\^\]/g,
+                                    ""
+                                )}</div><br><div style="display:flex; align-items:center; justify-content:space-between"><div><img
+                    src="icons/Frame_54.svg"
+                    alt="icon"
+                    style="width: 22px; height: 22px; cursor: pointer"
+                /><span>  </span><img
+                    src="icons/Frame_55.svg"
+                    alt="icon"
+                    style="width: 22px; height: 22px; cursor: pointer"
+                /></div><button style="display:flex; align-items:center; padding: 5px" onClick="parent.open('https://community.graphisoft.com/t5/International/ct-p/EN')" "><img
+                    src="icons/Frame_52.svg"
+                    alt="icon"
+                    style="width: 20px; height: 20px"
+                /> Community</button></div>` ||
                                 "I'm sorry! Can you repeat your question?",
                             sender: "GridBot",
                             expand: true,
