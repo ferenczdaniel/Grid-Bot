@@ -52,7 +52,8 @@
 .cs-message-list,
 .cs-chat-container,
 .cs-main-container,
-.cs-message-input {
+.cs-message-input,
+.cs-typing-indicator {
     background-color: #e7e7e7 !important;
     border: none !important;
 }

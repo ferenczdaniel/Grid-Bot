@@ -165,6 +165,8 @@ function App() {
                         height: "30px",
                         display: "flex",
                         justifyContent: "space-between",
+                        backgroundColor: "#e7e7e7",
+                        borderBottom: "1px solid rgba(0,0,0,0.2)",
                     }}
                 >
                     <div
@@ -195,6 +197,8 @@ function App() {
                 <div
                     style={{
                         height: "100%",
+                        paddingTop: "3px",
+                        backgroundColor: "#e7e7e7",
                     }}
                 >
                     <MainContainer>
