@@ -118,48 +118,62 @@ function App() {
                     position: "relative",
                     height: "100vh",
                     width: "100%",
+                    display: "flex",
+                    flexDirection: "column",
                 }}
             >
-                <MainContainer>
-                    <ChatContainer>
-                        <MessageList
-                            scrollBehavior="smooth"
-                            typingIndicator={
-                                isTyping ? (
-                                    <TypingIndicator content="GridBot is typing" />
-                                ) : null
-                            }
-                        >
-                            {messages.map((message, i) => {
-                                console.log(message);
-                                if (message.expand) {
-                                    return (
-                                        <Message key={i} model={message}>
-                                            <Message.HtmlContent
-                                                html={message.content}
-                                            />
-                                        </Message>
-                                    );
-                                } else {
-                                    return (
-                                        <Message
-                                            style={{ cursor: "pointer" }}
-                                            onClick={() => {
-                                                changeExpand(i);
-                                            }}
-                                            key={i}
-                                            model={message.message}
-                                        />
-                                    );
+                <div
+                    style={{
+                        height: "30px",
+                    }}
+                ></div>
+                <div
+                    style={{
+                        height: "100%",
+                    }}
+                >
+                    <MainContainer>
+                        <ChatContainer>
+                            <MessageList
+                                scrollBehavior="smooth"
+                                typingIndicator={
+                                    isTyping ? (
+                                        <TypingIndicator content="GridBot is typing" />
+                                    ) : null
                                 }
-                            })}
-                        </MessageList>
-                        <MessageInput
-                            placeholder="Ask me anything..."
-                            onSend={handleSend}
-                        />
-                    </ChatContainer>
-                </MainContainer>
+                            >
+                                {messages.map((message, i) => {
+                                    console.log(message);
+                                    if (message.expand) {
+                                        return (
+                                            <Message key={i} model={message}>
+                                                <Message.HtmlContent
+                                                    html={message.content}
+                                                />
+                                            </Message>
+                                        );
+                                    } else {
+                                        return (
+                                            <Message
+                                                style={{ cursor: "pointer" }}
+                                                onClick={() => {
+                                                    changeExpand(i);
+                                                }}
+                                                key={i}
+                                                model={message.message}
+                                            />
+                                        );
+                                    }
+                                })}
+                            </MessageList>
+                            <MessageInput
+                                placeholder="Ask me anything..."
+                                onSend={handleSend}
+                                attachButton={false}
+                            />
+                        </ChatContainer>
+                    </MainContainer>
+                </div>
             </div>
         </div>
     );
