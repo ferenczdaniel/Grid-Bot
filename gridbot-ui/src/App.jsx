@@ -72,19 +72,23 @@ function App() {
                                 `<div style="display:flex;">${body.text.replace(
                                     /\[\^[0-9]*\^\]/g,
                                     ""
-                                )}</div><br><div style="display:flex; align-items:center; justify-content:space-between"><img
+                                )}</div><br><div style="display:flex; align-items:center; justify-content:space-between"><div><img
+                    src="icons/Frame_43.svg"
+                    alt="icon"
+                    style="width: 22px; height: 22px; cursor: pointer"
+                /></div><div><img
                     src="icons/Frame_54.svg"
                     alt="icon"
                     style="width: 22px; height: 22px; cursor: pointer"
-                /><img
+                /><span>  </span><img
                     src="icons/Frame_55.svg"
                     alt="icon"
                     style="width: 22px; height: 22px; cursor: pointer"
-                /><button style="display:flex; align-items:center; padding: 5px" onClick="parent.open('https://community.graphisoft.com/t5/International/ct-p/EN')" "><img
+                /></div><button style="display:flex; align-items:center; padding: 5px" onClick="parent.open('https://community.graphisoft.com/t5/International/ct-p/EN')" "><img
                     src="icons/Frame_52.svg"
                     alt="icon"
                     style="width: 20px; height: 20px"
-                /> Community</button><div>` ||
+                /> Community</button></div>` ||
                                 "I'm sorry! Can you repeat your question?",
                             sender: "GridBot",
                             expand: true,
@@ -100,6 +104,10 @@ function App() {
                                     /\[\^[0-9]*\^\]/g,
                                     ""
                                 )}</div><br><div style="display:flex; align-items:center; justify-content:space-between"><div><img
+                    src="icons/Frame_43.svg"
+                    alt="icon"
+                    style="width: 22px; height: 22px; cursor: pointer"
+                /></div><div><img
                     src="icons/Frame_54.svg"
                     alt="icon"
                     style="width: 22px; height: 22px; cursor: pointer"
@@ -155,8 +163,35 @@ function App() {
                 <div
                     style={{
                         height: "30px",
+                        display: "flex",
+                        justifyContent: "space-between",
                     }}
-                ></div>
+                >
+                    <div
+                        onClick={() =>
+                            (window.location.href =
+                                "https://community.graphisoft.com/t5/International/ct-p/EN")
+                        }
+                    >
+                        <img
+                            src={`icons/Frame_52.svg`}
+                            alt={"icon"}
+                            style={{ cursor: "pointer" }}
+                        />{" "}
+                        <img
+                            src={`icons/Frame_44.svg`}
+                            alt={"icon"}
+                            style={{ cursor: "pointer" }}
+                        />
+                    </div>
+                    <div onClick={() => {}}>
+                        <img
+                            src={`icons/Frame_48.svg`}
+                            alt={"icon"}
+                            style={{ cursor: "pointer" }}
+                        />
+                    </div>
+                </div>
                 <div
                     style={{
                         height: "100%",
