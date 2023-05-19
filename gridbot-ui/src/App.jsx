@@ -84,7 +84,7 @@ function App() {
                     src="icons/Frame_55.svg"
                     alt="icon"
                     style="width: 22px; height: 22px; cursor: pointer"
-                /></div><button style="display:flex; align-items:center; padding: 5px" onClick="parent.open('https://community.graphisoft.com/t5/International/ct-p/EN')" "><img
+                /></div><button style="display:flex; align-items:center; padding: 5px" onClick="window.open('https://community.graphisoft.com/t5/International/ct-p/EN')" "><img
                     src="icons/Frame_52.svg"
                     alt="icon"
                     style="width: 20px; height: 20px"
@@ -115,7 +115,7 @@ function App() {
                     src="icons/Frame_55.svg"
                     alt="icon"
                     style="width: 22px; height: 22px; cursor: pointer"
-                /></div><button style="display:flex; align-items:center; padding: 5px" onClick="parent.open('https://community.graphisoft.com/t5/International/ct-p/EN')" "><img
+                /></div><button style="display:flex; align-items:center; padding: 5px" onClick="window.open('https://community.graphisoft.com/t5/International/ct-p/EN')" "><img
                     src="icons/Frame_52.svg"
                     alt="icon"
                     style="width: 20px; height: 20px"
@@ -171,8 +171,9 @@ function App() {
                 >
                     <div
                         onClick={() =>
-                            (window.location.href =
-                                "https://community.graphisoft.com/t5/International/ct-p/EN")
+                            window.open(
+                                "https://community.graphisoft.com/t5/International/ct-p/EN"
+                            )
                         }
                     >
                         <img
