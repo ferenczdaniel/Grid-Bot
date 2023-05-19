@@ -100,6 +100,23 @@ function App() {
                             expand: true,
                             type: "html",
                         },
+                        {
+                            content: `<div style="display:flex; flex-direction: column; justify-content: start;"> <div> I posted "<b>${
+                                chatMessages[chatMessages.length - 1].content
+                            }</b>" to Graphisoft Community Modeling board. I will notify you here if someone replies. </div> <div style="width: 150px; height: 50px; margin-bottom: 10px"> <button style="display:flex; align-items:center; padding: 5px" onClick="window.open('https://community.graphisoft.com/t5/International/ct-p/EN')" "><img
+                                src="icons/Frame_52.svg"
+                                alt="icon"
+                                style="width: 20px; height: 20px; padding-top: 1px; padding-bottom: 1px;"
+                            /> Community</button> </div> </div>`,
+                            message: {
+                                content: "<b>Post question on Community</b>",
+                                sender: "GridBot",
+                                type: "html",
+                            },
+                            expand: false,
+                            sender: "GridBot",
+                            type: "html",
+                        },
                     ]);
                 } else {
                     setMessages([
@@ -141,8 +158,26 @@ function App() {
                                     )
                                     .join(", "),
                             message: {
-                                message: "See more...",
+                                content: "<b>See more...</b>",
                                 sender: "GridBot",
+                                type: "html",
+                            },
+                            expand: false,
+                            sender: "GridBot",
+                            type: "html",
+                        },
+                        {
+                            content: `<div style="display:flex; flex-direction: column; justify-content: start;"> <div> I posted "<b>${
+                                chatMessages[chatMessages.length - 1].content
+                            }</b>" to Graphisoft Community Modeling board. I will notify you here if someone replies. </div> <div style="width: 150px; height: 50px; margin-bottom: 10px"> <button style="display:flex; align-items:center; padding: 5px" onClick="window.open('https://community.graphisoft.com/t5/International/ct-p/EN')" "><img
+                                src="icons/Frame_52.svg"
+                                alt="icon"
+                                style="width: 20px; height: 20px; padding-top: 1px; padding-bottom: 1px;"
+                            /> Community</button> </div> </div>`,
+                            message: {
+                                content: "<b>Post question on Community</b>",
+                                sender: "GridBot",
+                                type: "html",
                             },
                             expand: false,
                             sender: "GridBot",
@@ -171,29 +206,44 @@ function App() {
                         height: "30px",
                         display: "flex",
                         justifyContent: "space-between",
+                        alignItems: "center",
+                        paddingTop: "5px",
                         backgroundColor: "#e7e7e7",
                         borderBottom: "1px solid rgba(0,0,0,0.2)",
+                        paddingLeft: "10px",
+                        paddingRight: "10px",
                     }}
                 >
                     <div
-                        onClick={() =>
-                            window.open(
-                                "https://community.graphisoft.com/t5/International/ct-p/EN"
-                            )
-                        }
+                        style={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                        }}
                     >
-                        <img
-                            src={`icons/Frame_52.svg`}
-                            alt={"icon"}
-                            style={{ cursor: "pointer" }}
-                        />{" "}
-                        <img
-                            src={`icons/Frame_44.svg`}
-                            alt={"icon"}
-                            style={{ cursor: "pointer" }}
-                        />
+                        <div
+                            className="generalButton"
+                            onClick={() =>
+                                window.open(
+                                    "https://community.graphisoft.com/t5/International/ct-p/EN"
+                                )
+                            }
+                        >
+                            <img
+                                src={`icons/Frame_52.svg`}
+                                alt={"icon"}
+                                style={{ cursor: "pointer" }}
+                            />{" "}
+                        </div>
+                        <div className="generalButton">
+                            <img
+                                src={`icons/Frame_44.svg`}
+                                alt={"icon"}
+                                style={{ cursor: "pointer" }}
+                            />
+                        </div>
                     </div>
-                    <div onClick={() => {}}>
+                    <div className="generalButton" onClick={() => {}}>
                         <img
                             src={`icons/Frame_48.svg`}
                             alt={"icon"}
@@ -237,7 +287,13 @@ function App() {
                                                 }}
                                                 key={i}
                                                 model={message.message}
-                                            />
+                                            >
+                                                <Message.HtmlContent
+                                                    html={
+                                                        message.message.content
+                                                    }
+                                                />
+                                            </Message>
                                         );
                                     }
                                 })}
