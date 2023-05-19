@@ -114,11 +114,7 @@ function App() {
                     src="icons/Frame_55.svg"
                     alt="icon"
                     style="width: 22px; height: 22px; cursor: pointer"
-                /></div><button style="display:flex; align-items:center; padding: 5px" onClick="window.open('https://community.graphisoft.com/t5/International/ct-p/EN')" "><img
-                    src="icons/Frame_52.svg"
-                    alt="icon"
-                    style="width: 20px; height: 20px"
-                /> Community</button></div>` ||
+                /></div><button style="display:flex; align-items:center; padding: 5px" onClick="window.open('https://helpcenter.graphisoft.com/')" ">Help Center</button></div>` ||
                                 "I'm sorry! Can you repeat your question?",
                             sender: "GridBot",
                             expand: true,
@@ -162,11 +158,7 @@ function App() {
                     src="icons/Frame_55.svg"
                     alt="icon"
                     style="width: 22px; height: 22px; cursor: pointer"
-                /></div><button style="display:flex; align-items:center; padding: 5px" onClick="window.open('https://community.graphisoft.com/t5/International/ct-p/EN')" "><img
-                    src="icons/Frame_52.svg"
-                    alt="icon"
-                    style="width: 20px; height: 20px"
-                /> Community</button></div>` ||
+                /></div><button style="display:flex; align-items:center; padding: 5px" onClick="window.open('https://helpcenter.graphisoft.com/')" ">Help Center</button></div>` ||
                                 "I'm sorry! Can you repeat your question?",
                             sender: "GridBot",
                             expand: true,
