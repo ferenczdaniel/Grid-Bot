@@ -89,22 +89,20 @@ function App() {
     };
 
     async function processMessageToGridBot(chatMessages) {
-        fetch("http://localhost:8081/", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-                message:
-                    chatMessages[chatMessages.length - 1].content +
-                    ". If this question is Archicad specific, please give me the answer from https://helpcenter.graphisoft.com/ or https://community.graphisoft.com/, otherwise anywhere",
-            }),
-        })
-            .then((data) => {
-                return data.json();
+        if (chatMessages[chatMessages.length - 1].content === ":)") {
+            fetch("http://localhost:8081/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    message: "Please tell me an architect joke!",
+                }),
             })
-            .then((body) => {
-                console.log(body);
+                .then((data) => {
+                    return data.json();
+                })
+                .then((body) => {
+                    console.log(body);
 
-                if (body.detail.sourceAttributions.length === 0) {
                     setMessages([
                         ...chatMessages,
                         {
@@ -112,7 +110,40 @@ function App() {
                                 `<div style="display:flex;">${body.text.replace(
                                     /\[\^[0-9]*\^\]/g,
                                     ""
-                                )}</div><br><div style="display:flex; align-items:center; justify-content:space-between"><div><img
+                                )}</div>` ||
+                                "I'm sorry! Can you repeat your question?",
+                            sender: "GridBot",
+                            expand: true,
+                            type: "html",
+                        },
+                    ]);
+                    setIsTyping(false);
+                });
+        } else {
+            fetch("http://localhost:8081/", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    message:
+                        chatMessages[chatMessages.length - 1].content +
+                        ". If this question is Archicad specific, please give me the answer from https://helpcenter.graphisoft.com/ or https://community.graphisoft.com/, otherwise anywhere",
+                }),
+            })
+                .then((data) => {
+                    return data.json();
+                })
+                .then((body) => {
+                    console.log(body);
+
+                    if (body.detail.sourceAttributions.length === 0) {
+                        setMessages([
+                            ...chatMessages,
+                            {
+                                content:
+                                    `<div style="display:flex;">${body.text.replace(
+                                        /\[\^[0-9]*\^\]/g,
+                                        ""
+                                    )}</div><br><div style="display:flex; align-items:center; justify-content:space-between"><div><img
                     src="icons/Frame_43.svg"
                     alt="icon"
                     style="width: 22px; height: 22px; cursor: pointer"
@@ -125,38 +156,40 @@ function App() {
                     alt="icon"
                     style="width: 22px; height: 22px; cursor: pointer"
                 /></div><button style="display:flex; align-items:center; padding: 5px" onClick="window.open('https://helpcenter.graphisoft.com/')" ">Help Center</button></div>` ||
-                                "I'm sorry! Can you repeat your question?",
-                            sender: "GridBot",
-                            expand: true,
-                            type: "html",
-                        },
-                        {
-                            content: `<div style="display:flex; flex-direction: column; justify-content: start;"> <div> I posted "<b>${
-                                chatMessages[chatMessages.length - 1].content
-                            }</b>" to Graphisoft Community Modeling board. I will notify you here if someone replies. </div> <div style="width: 150px; height: 50px; margin-bottom: 10px"> <button style="display:flex; align-items:center; padding: 5px" onClick="window.open('https://community.graphisoft.com/t5/International/ct-p/EN')" "><img
+                                    "I'm sorry! Can you repeat your question?",
+                                sender: "GridBot",
+                                expand: true,
+                                type: "html",
+                            },
+                            {
+                                content: `<div style="display:flex; flex-direction: column; justify-content: start;"> <div> I posted "<b>${
+                                    chatMessages[chatMessages.length - 1]
+                                        .content
+                                }</b>" to Graphisoft Community Modeling board. I will notify you here if someone replies. </div> <div style="width: 150px; height: 50px; margin-bottom: 10px"> <button style="display:flex; align-items:center; padding: 5px" onClick="window.open('https://community.graphisoft.com/t5/International/ct-p/EN')" "><img
                                 src="icons/Frame_52.svg"
                                 alt="icon"
                                 style="width: 20px; height: 20px; padding-top: 1px; padding-bottom: 1px;"
                             /> Community</button> </div> </div>`,
-                            message: {
-                                content: "<b>Post question on Community</b>",
+                                message: {
+                                    content:
+                                        "<b>Post question on Community</b>",
+                                    sender: "GridBot",
+                                    type: "html",
+                                },
+                                expand: false,
                                 sender: "GridBot",
                                 type: "html",
                             },
-                            expand: false,
-                            sender: "GridBot",
-                            type: "html",
-                        },
-                    ]);
-                } else {
-                    setMessages([
-                        ...chatMessages,
-                        {
-                            content:
-                                `<div style="display:flex;">${body.text.replace(
-                                    /\[\^[0-9]*\^\]/g,
-                                    ""
-                                )}</div><br><div style="display:flex; align-items:center; justify-content:space-between"><div><img
+                        ]);
+                    } else {
+                        setMessages([
+                            ...chatMessages,
+                            {
+                                content:
+                                    `<div style="display:flex;">${body.text.replace(
+                                        /\[\^[0-9]*\^\]/g,
+                                        ""
+                                    )}</div><br><div style="display:flex; align-items:center; justify-content:space-between"><div><img
                     src="icons/Frame_43.svg"
                     alt="icon"
                     style="width: 22px; height: 22px; cursor: pointer"
@@ -169,51 +202,54 @@ function App() {
                     alt="icon"
                     style="width: 22px; height: 22px; cursor: pointer"
                 /></div><button style="display:flex; align-items:center; padding: 5px" onClick="window.open('https://helpcenter.graphisoft.com/')" ">Help Center</button></div>` ||
-                                "I'm sorry! Can you repeat your question?",
-                            sender: "GridBot",
-                            expand: true,
-                            type: "html",
-                        },
-                        {
-                            content:
-                                "Learn more: " +
-                                body.detail.sourceAttributions
-                                    .map(
-                                        (obj) =>
-                                            `<a href=${obj.seeMoreUrl}>${obj.seeMoreUrl}</a>`
-                                    )
-                                    .join(", "),
-                            message: {
-                                content: "<b>See more...</b>",
+                                    "I'm sorry! Can you repeat your question?",
+                                sender: "GridBot",
+                                expand: true,
+                                type: "html",
+                            },
+                            {
+                                content:
+                                    "Learn more: " +
+                                    body.detail.sourceAttributions
+                                        .map(
+                                            (obj) =>
+                                                `<a href=${obj.seeMoreUrl}>${obj.seeMoreUrl}</a>`
+                                        )
+                                        .join(", "),
+                                message: {
+                                    content: "<b>See more...</b>",
+                                    sender: "GridBot",
+                                    type: "html",
+                                },
+                                expand: false,
                                 sender: "GridBot",
                                 type: "html",
                             },
-                            expand: false,
-                            sender: "GridBot",
-                            type: "html",
-                        },
-                        {
-                            content: `<div style="display:flex; flex-direction: column; justify-content: start;"> <div> I posted "<b>${
-                                chatMessages[chatMessages.length - 1].content
-                            }</b>" to Graphisoft Community Modeling board. I will notify you here if someone replies. </div> <div style="width: 150px; height: 50px; margin-bottom: 10px"> <button style="display:flex; align-items:center; padding: 5px" onClick="window.open('https://community.graphisoft.com/t5/International/ct-p/EN')" "><img
+                            {
+                                content: `<div style="display:flex; flex-direction: column; justify-content: start;"> <div> I posted "<b>${
+                                    chatMessages[chatMessages.length - 1]
+                                        .content
+                                }</b>" to Graphisoft Community Modeling board. I will notify you here if someone replies. </div> <div style="width: 150px; height: 50px; margin-bottom: 10px"> <button style="display:flex; align-items:center; padding: 5px" onClick="window.open('https://community.graphisoft.com/t5/International/ct-p/EN')" "><img
                                 src="icons/Frame_52.svg"
                                 alt="icon"
                                 style="width: 20px; height: 20px; padding-top: 1px; padding-bottom: 1px;"
                             /> Community</button> </div> </div>`,
-                            message: {
-                                content: "<b>Post question on Community</b>",
+                                message: {
+                                    content:
+                                        "<b>Post question on Community</b>",
+                                    sender: "GridBot",
+                                    type: "html",
+                                },
+                                expand: false,
                                 sender: "GridBot",
                                 type: "html",
                             },
-                            expand: false,
-                            sender: "GridBot",
-                            type: "html",
-                        },
-                    ]);
-                }
+                        ]);
+                    }
 
-                setIsTyping(false);
-            });
+                    setIsTyping(false);
+                });
+        }
     }
 
     if (height <= 50) {
