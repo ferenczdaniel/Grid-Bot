@@ -295,7 +295,6 @@ function App() {
                         display: "flex",
                         justifyContent: "space-between",
                         alignItems: "center",
-                        paddingTop: "5px",
                         backgroundColor: "#e7e7e7",
                         borderBottom: "1px solid rgba(0,0,0,0.2)",
                         paddingLeft: "10px",
@@ -348,8 +347,8 @@ function App() {
                     </div>
                 </div>
                 <div
+                    className="container"
                     style={{
-                        height: "100%",
                         paddingTop: "3px",
                         backgroundColor: "#e7e7e7",
                     }}
