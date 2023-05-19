@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import {
@@ -11,9 +11,11 @@ import {
 } from "@chatscope/chat-ui-kit-react";
 
 function App() {
-    useState(() => {
+    useEffect(() => {
         window.reactACInterface?.resizeDialog("300", "50");
     }, []);
+
+    const [showNotificationIcon, setShowNotificationIcon] = useState(false);
 
     const [messages, setMessages] = useState([
         {
@@ -57,6 +59,7 @@ function App() {
             });
 
             setMessages(newMessages);
+            setShowNotificationIcon(true);
         }, 5000);
     };
 
@@ -245,11 +248,19 @@ function App() {
                                 )
                             }
                         >
-                            <img
-                                src={`icons/Frame_52.svg`}
-                                alt={"icon"}
-                                style={{ cursor: "pointer" }}
-                            />{" "}
+                            {!showNotificationIcon ? (
+                                <img
+                                    src={`icons/Frame_52.svg`}
+                                    alt={"icon"}
+                                    style={{ cursor: "pointer" }}
+                                />
+                            ) : (
+                                <img
+                                    src={`icons/Comm_Not.svg`}
+                                    alt={"icon"}
+                                    style={{ cursor: "pointer" }}
+                                />
+                            )}{" "}
                         </div>
                         <div className="generalButton">
                             <img
