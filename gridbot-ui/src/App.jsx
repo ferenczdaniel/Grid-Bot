@@ -11,6 +11,10 @@ import {
 } from "@chatscope/chat-ui-kit-react";
 
 function App() {
+    useState(() => {
+        window.reactACInterface?.resizeDialog(300, 50);
+    }, []);
+
     const [messages, setMessages] = useState([
         {
             content: "Hello, I'm GridBot! Ask me anything!",
@@ -23,6 +27,8 @@ function App() {
     const [isTyping, setIsTyping] = useState(false);
 
     const handleSend = async (message) => {
+        window.reactACInterface?.resizeDialog(300, 500);
+
         const newMessage = {
             content: message,
             expand: true,
