@@ -12,7 +12,7 @@ import {
 
 function App() {
     useState(() => {
-        window.reactACInterface?.resizeDialog(300, 50);
+        window.reactACInterface?.resizeDialog("300", "50");
     }, []);
 
     const [messages, setMessages] = useState([
@@ -27,7 +27,7 @@ function App() {
     const [isTyping, setIsTyping] = useState(false);
 
     const handleSend = async (message) => {
-        window.reactACInterface?.resizeDialog(300, 500);
+        window.reactACInterface?.resizeDialog("300", "500");
 
         const newMessage = {
             content: message,
