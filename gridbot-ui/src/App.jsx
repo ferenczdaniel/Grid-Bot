@@ -16,6 +16,13 @@ function App() {
     }, []);
 
     const [showNotificationIcon, setShowNotificationIcon] = useState(false);
+    const [height, setHeight] = useState(500);
+
+    const handleResize = () => {
+        setHeight(window.innerHeight);
+    };
+
+    window.addEventListener("resize", handleResize);
 
     const [messages, setMessages] = useState([
         {
@@ -207,6 +214,32 @@ function App() {
 
                 setIsTyping(false);
             });
+    }
+
+    if (height <= 50) {
+        return (
+            <div className="App">
+                <div
+                    style={{
+                        position: "relative",
+                        height: "100vh",
+                        width: "100%",
+                        display: "flex",
+                        flexDirection: "column",
+                    }}
+                >
+                    <MainContainer>
+                        <ChatContainer>
+                            <MessageInput
+                                placeholder="Ask me anything..."
+                                onSend={handleSend}
+                                attachButton={false}
+                            />
+                        </ChatContainer>
+                    </MainContainer>
+                </div>
+            </div>
+        );
     }
 
     return (
