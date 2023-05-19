@@ -45,13 +45,37 @@ function App() {
         await processMessageToGridBot(newMessages);
     };
 
-    const changeExpand = (i) => {
+    const pushAnser = async () => {
+        setTimeout(() => {
+            let newMessages = [...messages];
+
+            newMessages.push({
+                content: "Answer from community bla bla",
+                sender: "GridBot",
+                expand: true,
+                type: "html",
+            });
+
+            setMessages(newMessages);
+        }, 5000);
+    };
+
+    const changeExpand = async (i) => {
         let newMessages = [...messages];
 
         newMessages[i].expand = true;
+
+        if (
+            newMessages[i].message?.content ===
+            "<b>Post question on Community</b>"
+        ) {
+            pushAnser();
+        }
         newMessages[i].message = "";
 
         setMessages(newMessages);
+
+        //console.log(newMessages[i].message?.content);
     };
 
     async function processMessageToGridBot(chatMessages) {
