@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 import "@chatscope/chat-ui-kit-styles/dist/default/styles.min.css";
 import {
@@ -11,9 +11,17 @@ import {
 } from "@chatscope/chat-ui-kit-react";
 
 function App() {
-    useState(() => {
+    useEffect(() => {
         window.reactACInterface?.resizeDialog("300", "50");
     }, []);
+
+    const [height, setHeight] = useState(500);
+
+    const handleResize = () => {
+        setHeight(window.innerHeight);
+    };
+
+    window.addEventListener("resize", handleResize);
 
     const [messages, setMessages] = useState([
         {
@@ -204,6 +212,32 @@ function App() {
 
                 setIsTyping(false);
             });
+    }
+
+    if (height <= 50) {
+        return (
+            <div className="App">
+                <div
+                    style={{
+                        position: "relative",
+                        height: "100vh",
+                        width: "100%",
+                        display: "flex",
+                        flexDirection: "column",
+                    }}
+                >
+                    <MainContainer>
+                        <ChatContainer>
+                            <MessageInput
+                                placeholder="Ask me anything..."
+                                onSend={handleSend}
+                                attachButton={false}
+                            />
+                        </ChatContainer>
+                    </MainContainer>
+                </div>
+            </div>
+        );
     }
 
     return (
