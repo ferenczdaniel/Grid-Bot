@@ -12,7 +12,7 @@ import {
 
 function App() {
     useEffect(() => {
-        window.reactACInterface?.resizeDialog("300", "50");
+        window.reactACInterface?.resizeDialog({ width: "400", height: "50" });
     }, []);
 
     const [showNotificationIcon, setShowNotificationIcon] = useState(false);
@@ -36,7 +36,7 @@ function App() {
     const [isTyping, setIsTyping] = useState(false);
 
     const handleSend = async (message) => {
-        window.reactACInterface?.resizeDialog("300", "500");
+        window.reactACInterface?.resizeDialog({ width: "400", height: "500" });
 
         const newMessage = {
             content: message,
