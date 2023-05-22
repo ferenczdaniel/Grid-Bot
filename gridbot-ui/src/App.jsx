@@ -39,7 +39,7 @@ function App() {
         window.reactACInterface?.resizeDialog({ width: "400", height: "500" });
 
         const newMessage = {
-            content: message,
+            content: message.replace(/<s.*">/, "").replace(/<\/span>/, ""),
             expand: true,
             type: "html",
             direction: "outgoing",
