@@ -12,7 +12,7 @@ import {
 
 function App() {
     useEffect(() => {
-        window.reactACInterface?.resizeDialog({ width: "400", height: "50" });
+        window.reactACInterface?.resizeDialog({ width: "400", height: "55" });
     }, []);
 
     const [showNotificationIcon, setShowNotificationIcon] = useState(false);
@@ -54,20 +54,30 @@ function App() {
         await processMessageToGridBot(newMessages);
     };
 
-    const pushAnser = async () => {
-        setTimeout(() => {
-            let newMessages = [...messages];
+    const pushAnswer = async (question) => {
+        if (question.includes("polygonal")) {
+            setTimeout(() => {
+                let newMessages = [...messages];
 
-            newMessages.push({
-                content: "Answer from community bla bla",
-                sender: "GridBot",
-                expand: true,
-                type: "html",
-            });
+                newMessages.push({
+                    content: `Hey Judy,
 
-            setMessages(newMessages);
-            setShowNotificationIcon(true);
-        }, 5000);
+Here's a simple guide to cutting a polygonal hole in a Fill:
+
+1. Select the Fill you want to modify.
+2. Activate the Fill tool.
+3. Trace the corners of the hole polygon by clicking on them. If there is an existing shape that you want to cut out from the Fill, use the Magic Wand tool. Press down the Spacebar and hover over the element to trace its boundaries. You'll receive instant feedback, then click to complete the process.
+
+Best, Jeff`,
+                    sender: "GridBot",
+                    expand: true,
+                    type: "html",
+                });
+
+                setMessages(newMessages);
+                setShowNotificationIcon(true);
+            }, 15000);
+        }
     };
 
     const changeExpand = async (i) => {
@@ -79,7 +89,7 @@ function App() {
             newMessages[i].message?.content ===
             "<b>Post question on Community</b>"
         ) {
-            pushAnser();
+            pushAnswer(newMessages[i].question);
         }
         newMessages[i].message = "";
 
@@ -90,35 +100,18 @@ function App() {
 
     async function processMessageToGridBot(chatMessages) {
         if (chatMessages[chatMessages.length - 1].content === ":)") {
-            fetch("http://localhost:8081/", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    message: "Please tell me an architect joke!",
-                }),
-            })
-                .then((data) => {
-                    return data.json();
-                })
-                .then((body) => {
-                    console.log(body);
-
-                    setMessages([
-                        ...chatMessages,
-                        {
-                            content:
-                                `<div style="display:flex;">${body.text.replace(
-                                    /\[\^[0-9]*\^\]/g,
-                                    ""
-                                )}</div>` ||
-                                "I'm sorry! Can you repeat your question?",
-                            sender: "GridBot",
-                            expand: true,
-                            type: "html",
-                        },
-                    ]);
-                    setIsTyping(false);
-                });
+            setTimeout(() => {
+                setMessages([
+                    ...chatMessages,
+                    {
+                        content: `<div style="display:flex;">Why did the architect break up with his girlfriend?<br /><br />Because he just wasn't archi-texturaly compatible.</div>`,
+                        sender: "GridBot",
+                        expand: true,
+                        type: "html",
+                    },
+                ]);
+                setIsTyping(false);
+            }, 2000);
         } else {
             fetch("http://localhost:8081/", {
                 method: "POST",
@@ -126,7 +119,7 @@ function App() {
                 body: JSON.stringify({
                     message:
                         chatMessages[chatMessages.length - 1].content +
-                        ". If this question is Archicad specific, please give me the answer from https://helpcenter.graphisoft.com/ or https://community.graphisoft.com/, otherwise anywhere",
+                        " archicad",
                 }),
             })
                 .then((data) => {
@@ -240,6 +233,9 @@ function App() {
                                     sender: "GridBot",
                                     type: "html",
                                 },
+                                question:
+                                    chatMessages[chatMessages.length - 1]
+                                        .content,
                                 expand: false,
                                 sender: "GridBot",
                                 type: "html",
@@ -252,7 +248,7 @@ function App() {
         }
     }
 
-    if (height <= 50) {
+    if (height <= 55) {
         return (
             <div className="App">
                 <div
@@ -330,7 +326,10 @@ function App() {
                                 />
                             )}{" "}
                         </div>
-                        <div className="generalButton">
+                        <div
+                            className="generalButton"
+                            onClick={() => window.location.reload()}
+                        >
                             <img
                                 src={`icons/Frame_44.svg`}
                                 alt={"icon"}
